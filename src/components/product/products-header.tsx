@@ -8,7 +8,7 @@ interface ProductsHeaderProps {
 
 function ProductsHeader({title, customClass}:ProductsHeaderProps) {
   return (
-    <div className={cn("mb-4 text-2xl font-semibold inline-block text-orange-600 rounded-md", customClass)}>
+    <div className={cn("mb-4 text-3xl font-semibold inline-block dark:text-orange-600 text-orange-700  rounded-md", customClass)}>
       {title}
     </div>
   )

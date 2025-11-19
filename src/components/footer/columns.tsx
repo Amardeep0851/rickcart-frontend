@@ -33,7 +33,7 @@ function Columns() {
             <li className="" key={category.href}>
               <Link
                 href="/aboutus"
-                className="hover:text-orange-700 transition duration-200"
+                className="hover:text-orange-700 transition-all duration-200 hover:pl-1"
               >
                 {category.name}
               </Link>
@@ -51,7 +51,7 @@ function Columns() {
               <li className="" key={category.href}>
                 <Link
                   href="/aboutus"
-                  className="hover:text-orange-700 transition duration-200"
+                  className="hover:text-orange-700  transition-all duration-200 hover:pl-1"
                 >
                   {category.name}
                 </Link>
@@ -63,38 +63,24 @@ function Columns() {
       <div className="sm:border-r-2 border-zinc-400/50 dark:border-zinc-700/70 col-start-1 col-end-3 sm:col-start-auto sm:col-end-auto">
         <h1 className="text-lg font-bold pb-0.5 text-orange-700">Company</h1>
         <ul className="leading-7 pl-3 dark:text-zinc-300 text-zinc-800">
-          <li>
-            <Link
-              href="/aboutus"
-              className="hover:text-orange-700 transition duration-200"
-            >
-              About us
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/aboutus"
-              className="hover:text-orange-700 transition duration-200"
-            >
-              Return policy
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/aboutus"
-              className="hover:text-orange-700 transition duration-200"
-            >
-              Contact Us
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/aboutus"
-              className="hover:text-orange-700 transition duration-200"
-            >
-              Term and Service
-            </Link>
-          </li>
+          {
+            [ 
+              {routeName:"About Us", route:"/about-us"},
+              {routeName:"Return policy", route:"/return-policy"},
+              {routeName:"Contact Us", route:"/contact-us"},
+              {routeName:"Term and Service", route:"/term-and-service"},
+            ].map((item, index) => (
+            <li  key={index}>
+              <Link
+                href={item.route}
+               
+                className="hover:text-orange-700 transition-all duration-200 hover:pl-1"
+              >
+                {item.routeName}
+              </Link>
+            </li>
+            ))
+          }
         </ul>
       </div>
       <div className="pr-4 col-start-1 col-end-3 lg:col-start-auto lg:col-end-auto">
@@ -131,15 +117,18 @@ function Columns() {
         <div className="flex pt-4 gap-3 justify-end">
           <div>Follow us</div>
           <ul className="flex gap-4">
-            <li>
-              <Facebook className="size-5 text-orange-800 hover:text-orange-700 dark:text-orange-700 dark:hover:text-orange-800 duration-200 transition cursor-pointer" />
-            </li>
-            <li>
-              <Instagram className="size-5 text-orange-800 hover:text-orange-700 dark:text-orange-700 dark:hover:text-orange-800 duration-200 transition cursor-pointer" />
-            </li>
-            <li>
-              <Twitter className="size-5 text-orange-800 hover:text-orange-700 dark:text-orange-700 dark:hover:text-orange-800 duration-200 transition cursor-pointer" />
-            </li>
+            {
+              [
+                {Icon:Facebook},
+                {Icon:Instagram},
+                {Icon:Twitter}
+              ].map((item, index) => (
+                <li className="size-5 hover:pl-1 transition-all" key={index}>
+                  <item.Icon className="size-5 text-orange-800 hover:text-orange-700 dark:text-orange-700 dark:hover:text-orange-800 duration-200 transition-all cursor-pointer " /> 
+              </li>
+              ))
+            }
+           
           </ul>
         </div>
       </div>

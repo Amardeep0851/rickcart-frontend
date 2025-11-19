@@ -15,7 +15,7 @@ function Header() {
       <div className="justify-self-center pt-1">
       <Navbar />
      </div>
-      <div className="ml-auto flex gap-4 items-center pt-1">
+      <div className="ml-auto flex gap-4 items-center pt-1 ">
         <Search />
         <Cart />
         <ModeToggle />
