@@ -90,9 +90,3 @@ export type MenuType = {
 }
 
 
-export type NavButtonProps = {
-  href:string;
-  Icon?:React.ComponentType<{ className?: string }>;
-  name:string;
-  className?:string;
-}

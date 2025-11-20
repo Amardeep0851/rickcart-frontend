@@ -14,7 +14,7 @@ export default function OrdersHeader() {
   return (
     <div className="w-full mb-8">
 
-      <div className="flex items-center justify-between border-b dark:border-zinc-700 border-zinc-300 pb-4">
+      <div className="md:flex md:items-center md:justify-between border-b dark:border-zinc-700 border-zinc-300 pb-4">
         {/* <div className="mt-3 text-sm flex gap-x-4 items-center ">
         70 orders placed in
         <Select>
@@ -33,9 +33,9 @@ export default function OrdersHeader() {
           <Input
             type="text"
             placeholder="Search orders"
-            className=""
+            className="h-8"
           />
-          <Button className="cursor-pointer" variant="destructive">
+          <Button className="cursor-pointer" variant="orange" size="sm">
             Search
           </Button>
         </div>

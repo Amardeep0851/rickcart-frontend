@@ -9,7 +9,7 @@ function OrderPage() {
   return (
     <div>
       {/* Order Summary Page */}
-      <section className="max-w-7xl mx-auto dark:bg-zinc-800 bg-zinc-100 mt-4 rounded-md p-4 min-h-screen ">
+      <section className="max-w-7xl mx-4 xl:mx-auto  dark:bg-zinc-900 bg-zinc-100 mt-4 rounded-md p-4 min-h-screen ">
         <ProductsHeader title="Order Summary" />
         <div className="grid lg:grid-cols-2 gap-4 ">
           {/* Order Details */}

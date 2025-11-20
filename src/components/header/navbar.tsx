@@ -48,10 +48,10 @@ function Navbar() {
       {routes.map((route) => (
         <div
           className={cn(
-            "rounded-md px-4 py-1 flex capitalize hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-all duration-300 text-sm",
+            "rounded-md px-3 py-1 mx-1 flex capitalize hover:bg-zinc-300 dark:hover:bg-zinc-700 transition-all duration-300 text-sm",
             route.isActive
-              ? "bg-zinc-300 dark:bg-zinc-700/90 border-b-[1px] border-orange-300"
-              : "bg-zinc-200 dark:bg-zinc-700/50 border-b-[1px] border-orange-700"
+              ? "bg-zinc-300 dark:bg-zinc-700 border-b-[1px] border-orange-300"
+              : "bg-zinc-200 dark:bg-zinc-800 border-b-[1px] border-orange-700"
           )}
           key={route.href}
         >

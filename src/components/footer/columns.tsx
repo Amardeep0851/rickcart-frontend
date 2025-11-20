@@ -68,7 +68,7 @@ function Columns() {
               {routeName:"About Us", route:"/about-us"},
               {routeName:"Return policy", route:"/return-policy"},
               {routeName:"Contact Us", route:"/contact-us"},
-              {routeName:"Term and Service", route:"/term-and-service"},
+              {routeName:"Term and Condition", route:"/term-and-condition"},
             ].map((item, index) => (
             <li  key={index}>
               <Link
