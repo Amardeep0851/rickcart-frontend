@@ -1,4 +1,3 @@
-import { ProductImageType } from './types';
 import React from "react";
 
 export type Category = {
@@ -67,7 +66,8 @@ export type CategoryBIllboardProducts = Category & {
 }
 
 export type ProductWithImages = ProductsType & {
-  images:ProductImageType
+  images:ProductImageType;
+  category:Category;
 }
 export type BillboardType = {
   id:string;

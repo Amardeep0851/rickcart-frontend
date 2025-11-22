@@ -38,7 +38,6 @@ function UserSetting() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuSeparator />
         <DropdownMenuItem className="group flex justify-between text-base font-medium">
           Log out
           <LogOut className="size-4 dark:text-zinc-300 text-zinc-700 group-hover:text-white"  />

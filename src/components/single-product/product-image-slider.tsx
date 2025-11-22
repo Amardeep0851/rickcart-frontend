@@ -20,7 +20,7 @@ interface ImageSliderProps {
 
 function ProductImageSlider({images}:ImageSliderProps) {
   return (
-    <div className={cn("md:col-span-3 border-0 ", images.length >= 5 ? "pb-40" : " pb-20 md:pb-40 lg:pb-20" )}>
+    <div className={cn("md:col-span-4 border-0 ", images.length >= 5 ? "pb-40" : " pb-20 md:pb-40 lg:pb-20" )}>
       <Tabs defaultValue={images[2].id} className="w-full gap-y-5">
         {/* ---------- Main Image Display ---------- */}
          {!!images.length &&

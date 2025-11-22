@@ -5,12 +5,13 @@ import {
   Facebook,
   Instagram,
   LucideRotateCcwSquare,
+  RefreshCw,
   RotateCcw,
+  ShieldCheck,
   Twitter,
 } from "lucide-react";
 
 import { WEBSITE_URL } from "@/lib/constants";
-import { Category } from "@/lib/types";
 import { getRoutes } from "@/actions/useGetCategories";
 import { cn } from "@/lib/utils";
 
@@ -20,51 +21,18 @@ function Columns() {
   return (
     <div
       className={cn(
-        " grid col-span-1 sm:grid-cols-2 gap-8 mt-12 ",
-        routes.length > 7 ? "lg:grid-cols-4" : "lg:grid-cols-3"
+        " grid col-span-1 sm:grid-cols-2 mt-12 ",
+        routes.length > 5 ? "lg:grid-cols-4 gap-12" : "lg:grid-cols-3 gap-16"
       )}
     >
-      <div className="sm:border-r-2 border-zinc-400/50 dark:border-zinc-700/70">
-        <h1 className="text-lg font-bold pb-0.5 text-orange-700 ">
-          Categories
-        </h1>
-        <ul className="pl-3 leading-7 dark:text-zinc-200 text-zinc-900 ">
-          {routes?.slice(0, 7).map((category) => (
-            <li className="" key={category.href}>
-              <Link
-                href="/aboutus"
-                className="hover:text-orange-700 transition-all duration-200 hover:pl-1"
-              >
-                {category.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-      {routes.length > 7 && (
-        <div className="lg:border-r-2 border-zinc-400/50 dark:border-zinc-700/70">
-          <h1 className="text-lg font-bold pb-0.5 text-orange-700">
-            Categories
-          </h1>
-          <ul className="pl-3 leading-7 dark:text-zinc-300 text-zinc-800">
-            {routes?.slice(7, 14).map((category) => (
-              <li className="" key={category.href}>
-                <Link
-                  href="/aboutus"
-                  className="hover:text-orange-700  transition-all duration-200 hover:pl-1"
-                >
-                  {category.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <div className="sm:border-r-2 border-zinc-400/50 dark:border-zinc-700/70 col-start-1 col-end-3 sm:col-start-auto sm:col-end-auto">
-        <h1 className="text-lg font-bold pb-0.5 text-orange-700">Company</h1>
-        <ul className="leading-7 pl-3 dark:text-zinc-300 text-zinc-800">
+      
+      
+      <div className=" border-zinc-400/50 dark:border-zinc-700/70 col-start-1 col-end-3 sm:col-start-auto sm:col-end-auto">
+        <h1 className="text-xl font-bold pb-2 text-orange-700">Support</h1>
+        <ul className="leading-8 pl-0 dark:text-zinc-300 text-zinc-700">
           {
             [ 
+              {routeName:"Orders", route:"/orders"},
               {routeName:"About Us", route:"/about-us"},
               {routeName:"Return policy", route:"/return-policy"},
               {routeName:"Contact Us", route:"/contact-us"},
@@ -83,25 +51,62 @@ function Columns() {
           }
         </ul>
       </div>
-      <div className="pr-4 col-start-1 col-end-3 lg:col-start-auto lg:col-end-auto">
-        <p className="text-justify ">
+      <div className=" border-zinc-400/50 dark:border-zinc-700/70">
+        <h1 className="text-xl font-bold pb-2 text-orange-700 ">
+          Shop
+        </h1>
+        <ul className="pl-0 leading-8 dark:text-zinc-300 text-zinc-800 ">
+          {routes?.slice(0, 5).map((category) => (
+            <li className="" key={category.href}>
+              <Link
+                href={category.href}
+                  className={cn("hover:text-orange-700  transition-all duration-200 hover:pl-1", category.isActive && "text-orange-700")}
+              >
+                {category.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+      {routes.length > 5 && (
+        <div className=" border-zinc-400/50 dark:border-zinc-700/70">
+          <h1 className="text-lg font-bold pb-2 text-orange-700">
+            More
+          </h1>
+          <ul className="pl-0 leading-8 dark:text-zinc-300 text-zinc-800">
+            {routes?.slice(5, 14).map((category) => (
+              <li className="" key={category.href}>
+                <Link
+                  href={category.href}
+                  className={cn("hover:text-orange-700  transition-all duration-200 hover:pl-1", category.isActive && "bg-orange-700")}
+                >
+                  {category.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className="pr-0 col-start-1 col-end-3 lg:col-start-auto lg:col-end-auto ">
+        {/* <p className="text-justify dark:text-zinc-400 text-zinc-700">
           <Image
             src="/images/site-images/logo.png"
-            width="130"
-            height="80"
+            width="78"
+            height="48"
             alt="Logo"
-            className="float-left pr-2 mt-0.5  "
+            className="float-left pr-2 mt-2  "
           />
           guarantee that we provide 100% ORIGINAL products at {WEBSITE_URL}
         </p>
 
-        <p className="pt-4">
+        <p className="pt-4 dark:text-zinc-400 text-zinc-700 text-justify">
           <Image
-            src="/images/site-images/return-policy.png"
-            width="130"
-            height="100"
+            src="/images/site-images/return-policy2.png"
+            width="104"
+            height="62"
             alt="Return policy image"
-            className="float-left pr-2"
+            className="float-left pr-2 pt-1"
           />{" "}
           <span>
             Return can be made within 10 days of receiving your order.{" "}
@@ -112,10 +117,32 @@ function Columns() {
               Read More ...
             </Link>
           </span>
-        </p>
+        </p> */}
 
-        <div className="flex pt-4 gap-3 justify-end">
-          <div>Follow us</div>
+          
+  {/* Guarantee Block */}
+  <div className="flex gap-2 text-justify">
+    <ShieldCheck className="w-5 h-5 dark:text-orange-700 text-orange-600 shrink-0" />
+    <div>
+      <h5 className="font-bold dark:text-zinc-50 text-zinc-900 text-sm">100% Original</h5>
+      <p className="text-sm/normal dark:text-zinc-400 text-zinc-800  mt-1.5">
+        RickCart guarantees authentic products sourced directly from brands.
+      </p>
+    </div>
+  </div>
+
+  {/* Return Policy Block */}
+  <div className="flex gap-2 text-justify mt-2">
+    <RefreshCw className="w-5 h-5 dark:text-orange-700 text-orange-600 shrink-0" />
+    <div>
+      <h5 className="font-bold dark:text-zinc-50 text-zinc-900  text-sm">10 Day Returns</h5>
+      <p className="text-sm/normal dark:text-zinc-400 text-zinc-800  mt-2 ">
+        Change of mind? Return easily within 10 days. 
+        <span className="dark:text-orange-700 text-orange-700 cursor-pointer hover:underline ml-1">Read more...</span>
+      </p>
+    </div>
+  </div>
+        <div className="flex pt-4 gap-3 items-center justify-end dark:text-zinc-400 text-zinc-700">
           <ul className="flex gap-4">
             {
               [
@@ -123,8 +150,8 @@ function Columns() {
                 {Icon:Instagram},
                 {Icon:Twitter}
               ].map((item, index) => (
-                <li className="size-5 hover:pl-1 transition-all" key={index}>
-                  <item.Icon className="size-5 text-orange-800 hover:text-orange-700 dark:text-orange-700 dark:hover:text-orange-800 duration-200 transition-all cursor-pointer " /> 
+                <li className="size-10  transition-all dark:bg-zinc-800/70 bg-zinc-300 p-1.5 pl-2 rounded-full" key={index}>
+                  <item.Icon className="size-7 py-1 pr-1 hover:pl-1 text-orange-600 hover:text-orange-700 dark:text-orange-700 dark:hover:text-orange-800 duration-200 transition-all cursor-pointer" /> 
               </li>
               ))
             }
@@ -132,6 +159,7 @@ function Columns() {
           </ul>
         </div>
       </div>
+      
     </div>
   );
 }

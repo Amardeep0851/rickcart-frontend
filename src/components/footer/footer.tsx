@@ -7,11 +7,14 @@ import CopyrightPage from "./copyright";
 import ContactUsButton from "./contact-us-button";
 import { useGetCategories } from "@/actions/useGetCategories";
 
+
 function Footer() {
   const {data} = useGetCategories();
+  
+
   return (
     <div className=" bg-transparent relative mt-2 mx-4">
-      <div className="bg-gradient-to-b dark:from-zinc-800 dark:to-zinc-950/85 from-zinc-50 to-zinc-200/85 rounded-t-md z-50 px-5 py-12 max-w-7xl mx-auto">
+      <div className="bg-gradient-to-b dark:from-zinc-900/95 dark:to-zinc-950 from-zinc-50 to-zinc-200/95 rounded-t-md z-50 px-8 py-12 pt-1 max-w-7xl mx-auto">
 
         <ContactUsButton  />
         <Columns  />

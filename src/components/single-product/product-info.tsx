@@ -1,5 +1,5 @@
 import React from 'react'
-import { Banknote, HandCoins, LockKeyhole, Truck } from "lucide-react";
+import { Banknote, HandCoins, Heart, LockKeyhole, Truck } from "lucide-react";
 
 import { Button } from "../ui/button";
 import { ProductWithImages } from "@/lib/types";
@@ -13,6 +13,7 @@ import {
   SelectItem, 
   SelectTrigger, 
   SelectValue } from "../ui/select";
+import Link from "next/link";
 
 interface ProductInfoProps {
   product:ProductWithImages
@@ -24,24 +25,34 @@ function ProductInfo({product}:ProductInfoProps) {
     
   const description = product.description ? product.description : "No detail."
   return (
-<div className="col-span-4 border-0 ">
-        <h1 className="text-2xl font-medium text-justify border-b-2 border-zinc-200/90 pb-5">{product.name}</h1>
-
-        <h2 className="text-lg dark:text-zinc-300 text-zinc-700 pt-5 pb-3">
-          <b className="dark:text-zinc-100 text-zinc-900 ">{product.price} </b>
-          &nbsp; MRP<span className="line-through font-normal"> {product.comparePrice}</span>
+<div className="col-span-5 border-0 ">
+        <div className="border-b-[1px] dark:border-zinc-700 border-zinc-300 pb-5">
+        <h1 className="text-2xl/relaxed font-medium text-justify pb-2 ">{product.name}</h1>
+        <Link href={`/${product.category.slug}`} className="text-sm text-orange-700 dark:hover:text-orange-700 transition-all duration-200 hover:underline">
+        {product.category.name}
+        </Link>
+        </div>
+          <div className="pt-5 pb-3">
+            
+        <h2 className="text-lg dark:text-zinc-300 text-zinc-700  flex items-center">
+          <b className="dark:text-zinc-100 text-zinc-900 text-4xl ">${product.price} </b>
+          &nbsp; &nbsp;<span className="line-through font-normal text-zinc-400">${product.comparePrice}</span>
           {
             product.comparePrice && (
-              <span className="text-orange-700 font-medium"> &nbsp;({discount.toFixed(0)}% OFF)
+              <span className="text-green-500 font-medium text-lg"> &nbsp;{discount.toFixed(0)}% OFF
               </span> 
             )
           }
           
         </h2>
+        <div className="dark:text-zinc-400 text-zinc-700 text-sm ">
+            Inclusive of all taxes
+          </div>
+          </div>
         <p className="pb-6 text-green-600 font-medium text-lg">In stock</p>
         <Select >
             <SelectTrigger className="w-full cursor-pointer">
-              <SelectValue placeholder="Quantity: 1" className="" />
+              <SelectValue placeholder="Select Quantity" className="" />
             </SelectTrigger>
             <SelectContent className="">
               {[1, 2, 3, 4, 5].map((q) => (
@@ -51,16 +62,19 @@ function ProductInfo({product}:ProductInfoProps) {
               ))}
             </SelectContent>
           </Select> 
-          <div className="flex items-center gap-3 mb-5 pt-5 flex-col md:flex-row">
+          <div className="grid grid-cols-3 gap-3 mb-5 pt-5 flex-col md:flex-row">
           <Button className="cursor-pointer w-full md:w-1/2">
             Add to Cart
           </Button>
-          <Button className="bg-orange-700 hover:bg-orange-600 text-white cursor-pointer w-full md:w-1/2">
+          <Button className="bg-orange-700 hover:bg-orange-700 text-white cursor-pointer w-full md:w-1/2 ">
             Buy Now
+          </Button>
+          <Button variant="outline" className="cursor-pointer w-10 ">
+            <Heart className="size-5" />
           </Button>
         </div>
 
-        <Button variant="outline" className="cursor-pointer w-full">Add to Wish List</Button>
+        
       
         <div className="grid grid-cols-2 md:grid-cols-2  xl:grid-cols-4 gap-x-5 gap-y-4 text-xs  mt-5">
           {
