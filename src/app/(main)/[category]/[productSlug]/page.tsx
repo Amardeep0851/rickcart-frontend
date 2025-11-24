@@ -14,7 +14,7 @@ async function page({
   const product = await fetchProduct(productSlug);
 
   return (
-    <div className="p-4 px-8 pt-8 dark:bg-zinc-800 bg-zinc-100 my-5 rounded-md ">
+    <div className="p-4 px-8 pt-8 dark:bg-zinc-900 bg-zinc-100 my-5 rounded-md ">
       <div className="flex flex-col  md:grid md:grid-cols-9  md:gap-12 md:gap-y-7 ">
         <ProductImageSlider images={product.images} />
         <ProductInfo product={product} />

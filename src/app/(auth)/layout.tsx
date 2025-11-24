@@ -17,7 +17,7 @@ const inter = Inter({ weight: "600", subsets: ["latin"] });
 function AuthLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   return (
-    <div className="bg-linear-to-b from-zinc-900 to-zinc-800 min-h-screen px-4 pt-3 pb-10 relative overflow-hidden ">
+    <div className="bg-linear-to-b from-zinc-950 to-orange-800/15 min-h-screen px-4 pt-3 pb-10 relative overflow-hidden ">
       <div className="max-w-[1400px] mx-auto  ">
 
         {/* header */}
@@ -57,7 +57,7 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
 
           {/* right side login or sign up */}
           <motion.div 
-            className="col-span-2 lg:ml-16 xl:ml-0 z-50 lg:mt-4 mt-8 flex justify-center lg:justify-end"
+            className="col-span-2 lg:ml-16 xl:ml-0 z-50 lg:mt-4 mt-8 flex justify-center lg:justify-end items-center"
             initial={{x:50, opacity:0}}
             animate={{x:0, opacity:1}}
             transition={{

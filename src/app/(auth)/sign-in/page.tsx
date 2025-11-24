@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Icons } from "@/components/icons";
+import Link from "next/link";
 
 const schema = z.object({
   firstName: z.string().min(1, "First name is required."),
@@ -76,7 +77,7 @@ function SignInPage() {
    
       <Card className="w-full max-w-md mt-4 bg-zinc-900/50 border border-zinc-700 shadow-lg">
         <CardHeader className="pb-0">
-          <CardTitle className="text-center text-zinc-100">
+          <CardTitle className="text-center text-zinc-100 text-lg">
             Log in your account
           </CardTitle>
         </CardHeader>
@@ -169,6 +170,7 @@ function SignInPage() {
               <div>
                 <Button
                   type="submit"
+                  variant="orange"
                   className="w-full font-semibold shadow-md cursor-pointer "
                   disabled={loading}
                 >
@@ -184,14 +186,13 @@ function SignInPage() {
 
               <div className="text-center text-sm text-zinc-400">
                 Don't have account?{" "}
-                <a href="/auth/login" className="text-orange-600 ">
+                <Link href="/sign-up" className="text-orange-600 ">
                   Create New Account
-                </a>
+                </Link>
               </div>
             </form>
           )}
         </CardContent>
-        <CardFooter className="pt-0" />
       </Card>
   )
 }

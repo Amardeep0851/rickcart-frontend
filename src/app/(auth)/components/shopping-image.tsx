@@ -1,10 +1,12 @@
-"use client"
+"use client";
 import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
+import { CheckCircle, CheckCircle2 } from "lucide-react";
+import LeftBenefitItem from "./left-benefit-item";
 
 const inter = Inter({ weight: "400", subsets: ["latin"] });
 
@@ -14,25 +16,37 @@ function ShoppingImage() {
   return (
     <div className="md:grid md:grid-cols-6 w-full ">
       <div className="md:col-span-3">
-        <motion.p 
-          className={cn("text-lg/relaxed text-zinc-300 py-6 text-justify md:pr-10 ", inter.className)}
-          initial={{y:40, opacity:0}}
-          animate={{y:0, opacity:1}}
-          transition={{duration:0.5, delay:0.1}}
-          >
-         {
-          pathname.startsWith("/sign-up")
-          ?  "Create your account and explore a world of quality products at great prices. From daily essentials to trending gadgets — everything you need is just a few clicks away. Shop smarter, track orders with ease, and enjoy a seamless shopping experience from day one."
-          :"Looks like you’re ready to shop again. Log in to continue where you left off. Access your saved items, track deliveries, and enjoy personalized deals waiting for you. Simple, fast, and secure — just the way shopping should be."
-         }
-        </motion.p>
+        <motion.div
+          className={cn(" py-6 text-justify md:pr-10 ", inter.className)}
+          initial={{ y: 40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          {pathname.startsWith("/sign-up")
+            ? [
+                "Shop daily essentials & trending gadgets.",
+                "Enjoy quality products at unbeatable prices",
+                "Track orders effortlessly from day one.",
+              ].map((item, index) => (
+                <LeftBenefitItem item={item} key={index} />
+              ))
+              : 
+              [
+                "Pick up exactly where you left off.",
+                "Access your wishlist and order history.",
+                "Unlock exclusive deals waiting for you.",
+              ].map((item, index) => (                
+                <LeftBenefitItem item={item} key={index} />
+              ))
+            }
+        </motion.div>
       </div>
 
-      <motion.div 
-      className="md:col-span-3 md:ml-auto md:pt-2"
-      initial={{x:80, opacity:0}}
-      animate={{x:0, opacity:1}}
-      transition={{duration:1, delay:0.2}}
+      <motion.div
+        className="md:col-span-3 md:ml-auto md:pt-2"
+        initial={{ x: 80, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 1, delay: 0.2 }}
       >
         <div className="w-full  md:max-h-[400px] ">
           <div className="  aspect-[4/4] sm:h-[400px] h-[300px]  relative sm:mx-auto ml-auto ">
@@ -46,7 +60,10 @@ function ShoppingImage() {
             />
             <motion.div
               className="w-2 h-2 bg-orange-700 rounded-full absolute left-[70px] top-[15px] opacity-70"
-              animate={{ x: [0, -70, 0, 70, 0, 140, 0, -140, 0], y: [0, 70, 0, 140, 0, -70, 0, -140, 0] }}
+              animate={{
+                x: [0, -70, 0, 70, 0, 140, 0, -140, 0],
+                y: [0, 70, 0, 140, 0, -70, 0, -140, 0],
+              }}
               transition={{ repeat: Infinity, duration: 60 }}
             />
             <motion.div
@@ -62,12 +79,12 @@ function ShoppingImage() {
             <motion.div
               className="w-2 h-2 bg-orange-700 rounded-full absolute right-[140px] bottom-[60px] opacity-70"
               animate={{ x: [0, 500, 0], y: [0, -150, 0] }}
-              transition={{ repeat: Infinity, duration: 25, delay:8 }}
+              transition={{ repeat: Infinity, duration: 25, delay: 8 }}
             />
             <motion.div
               className="w-1 h-1 bg-orange-700 rounded-full absolute right-[170px] top-[173px] opacity-70"
               animate={{ x: [0, 350, 0], y: [0, -170, 0] }}
-              transition={{ repeat: Infinity, duration: 30, delay:5 }}
+              transition={{ repeat: Infinity, duration: 30, delay: 5 }}
             />
             <motion.div
               className="w-1 h-1 bg-orange-700 rounded-full absolute right-[50px] bottom-[35px] opacity-70"
@@ -79,12 +96,16 @@ function ShoppingImage() {
               animate={{ x: [0, 70, 0], y: [0, -70, 0] }}
               transition={{ repeat: Infinity, duration: 12 }}
             />
-             <motion.div
+            <motion.div
               className="size-48 bg-orange-700 rounded-full absolute right-[90px] top-[43px] opacity-30 blur-2xl"
-              animate={{ x: [60, 70, 60], y: [60, -70, 60], scale:[1.4, 1.5, 1.4] }}
+              animate={{
+                x: [60, 70, 60],
+                y: [60, -70, 60],
+                scale: [1.4, 1.5, 1.4],
+              }}
               transition={{ repeat: Infinity, duration: 20 }}
             />
-            
+
             <motion.img
               src="/images/site-images/ch2start.png"
               className=" opacity-100 absolute sm:top-[10px] sm:left-[60px] top-[15px] left-[15px] z-50"
@@ -136,8 +157,8 @@ function ShoppingImage() {
               width="90"
               height="90"
               alt="Shopping image"
-              animate={{x:[0,10,0]}}
-              transition={{duration:4, repeat:Infinity}}
+              animate={{ x: [0, 10, 0] }}
+              transition={{ duration: 4, repeat: Infinity }}
             />
             <Image
               src="/images/site-images/ch3.png"
