@@ -74,7 +74,14 @@ function SignInPage() {
     }
   
   return (
-   
+    <motion.div
+    className="w-full max-w-md mt-4"
+    initial={{x:50, opacity:0}}
+            animate={{x:0, opacity:1}}
+            transition={{
+              duration:1
+            }}
+    >
       <Card className="w-full max-w-md mt-4 bg-zinc-900/50 border border-zinc-700 shadow-lg">
         <CardHeader className="pb-0">
           <CardTitle className="text-center text-zinc-100 text-lg">
@@ -85,7 +92,7 @@ function SignInPage() {
           <div className="flex gap-4">
             <Button
               variant="outline"
-              className="flex-1 cursor-pointer text-blue-400 hover:text-blue-300"
+              className="flex-1 cursor-pointer text-blue-400 hover:text-blue-300 bg-zinc-800"
             >
               <Icons.facebook className="w-5 h-5" />
               <span>Facebook</span>
@@ -194,6 +201,7 @@ function SignInPage() {
           )}
         </CardContent>
       </Card>
+    </motion.div>
   )
 }
 

@@ -1,10 +1,7 @@
 import ProductList from "@/components/product/product-list";
 import Slider from "@/components/slider/slider";
-import { Loader2 } from "lucide-react";
-import { Suspense } from "react";
 
-export default function Home() {
-  
+export default async function Home() {
   return (
     <div className="">
       <Slider />

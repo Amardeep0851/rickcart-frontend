@@ -1,10 +1,11 @@
 "use client";
 import { z } from "zod";
-import Link from "next/link";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { motion } from "framer-motion";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 
 import {
@@ -31,13 +32,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Icons } from "@/components/icons";
-import {
-  AlertCircle,
-  ArrowLeft,
-  Loader2,
-  Mail,
-  X,
-} from "lucide-react";
+import { AlertCircle, ArrowLeft, Loader2, Mail, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   firstName: z.string().min(1, "First name is required."),
@@ -54,10 +50,13 @@ export default function RegisterPage() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [value, setValue] = useState<string | undefined>(undefined);
-  const [email, setEmail] = useState<string| null>(null);
-  const [id, setId] = useState<string| null>(null);
+  const [email, setEmail] = useState<string | null>(null);
+  const [canResend, setCanResend] = useState(true);
+  const [timer, setTimer] = useState(60);
+
   const isOTPButtonDisabled = !(value ? value?.length > 5 : false);
 
+  const route = useRouter();
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -76,14 +75,14 @@ export default function RegisterPage() {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`,
         values
       );
-      console.log(response);
-      if (response.status === 200) {
-        setEmail(response.data.email);
-        setId(response.data.id);
+      if (response?.status === 200) {
+        setEmail(response?.data?.email);
         setSuccess(true);
+        setCanResend(false);
+        setTimer(60);
       }
     } catch (error: any) {
-      const message = await error?.response?.data || "Something went wrong";
+      const message = (await error?.response?.data) || "Something went wrong";
       console.log(error.response.data);
       if (process.env.NODE_ENV !== "production") {
         console.log(error);
@@ -94,34 +93,61 @@ export default function RegisterPage() {
     }
   }
 
-  const handleOtp = async () => {
-    setLoading(true)
-    try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register/otp`, {
-        value,
-        email,
-        id
-      }) 
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else {
+      setCanResend(true);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
 
-    } catch (error) {
-      const message = await error?.response?.data || "Something went wrong";
-      console.log(error.response.data);
+  const handleOtp = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post( `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/otp`,{ value, email }, {withCredentials:true});
+
+      if (response?.status === 200) {
+        form.reset();
+        route.push("/");
+      }
+    } catch (error: any) {
+      const message = (await error?.response?.data) || "Something went wrong";
+      console.log(error);
+      if (error?.response?.status === 403 || error?.response?.status === 409) {
+        form.reset();
+        setSuccess(false);
+      }
       if (process.env.NODE_ENV !== "production") {
         console.log(error);
       }
       setError(message);
-    }
-    finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSendCode = () => {
-    console.log("code");
+    setTimer(60);
+    setCanResend(false);
+    setError("Email has been sent.");
+    setTimeout(() => {
+      setError("Please check your spam folder.");
+    }, 5000);
   };
 
   return (
-    <>
+    <motion.div
+    className="w-full h-auto max-w-md"
+      initial={{ x: 50, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{
+        duration: 1,
+      }}
+    >
       {!success ? (
         <Card className="w-full h-auto max-w-md bg-zinc-900/50 border border-zinc-700 shadow-lg">
           <CardHeader className="pb-0">
@@ -328,7 +354,7 @@ export default function RegisterPage() {
                 disabled={loading}
                 onChange={(value) => setValue(value)}
               >
-                <InputOTPGroup >
+                <InputOTPGroup>
                   <InputOTPSlot index={0} />
                   <InputOTPSlot index={1} />
                   <InputOTPSlot index={2} />
@@ -339,31 +365,26 @@ export default function RegisterPage() {
               </InputOTP>
 
               <div className="w-full text-center">
-                <Button
-                  type="button"
-                  onClick={handleSendCode}
-                  variant="link"
-                  disabled={loading}
-                  className="cursor-pointer w-auto mb-4 text-orange-600 hover:text-orange-500 "
-                >
-                  Resend Code
-                </Button>
-                <Button
-                  type="button"
-                  onClick={handleOtp}
-                  variant="orange"
-                  disabled={isOTPButtonDisabled || loading}
-                  className="cursor-pointer w-full "
-                >
-                  {
-                    loading 
-                    ?<Loader2 className="sieze-4 text-zinc-50 animate-spin" />
-                    :"Continue >"
-                  }
-                </Button>
-              </div>
-              {error && (
-                  <div className="text-white text-sm w-full bg-red-800 p-2 rounded-md flex gap-x-2 items-center">
+                <div className="text-sm text-center">
+                  {canResend ? (
+                    <Button
+                      type="button"
+                      onClick={handleSendCode}
+                      variant="link"
+                      disabled={loading}
+                      className="cursor-pointer w-auto mb-4 text-orange-600 hover:text-orange-500 "
+                    >
+                      Resend Code
+                    </Button>
+                  ) : (
+                    <div className="text-gray-500 pb-4">
+                      Resend code in{" "}
+                      <span className="text-white font-mono">{timer}s</span>
+                    </div>
+                  )}
+                </div>
+                {error && (
+                  <div className="text-white text-sm w-full bg-red-800 p-2 rounded-md flex gap-x-2 items-center mb-4">
                     <AlertCircle className="size-4 text-white mt-0.5" />
                     {error}
                     <X
@@ -372,6 +393,21 @@ export default function RegisterPage() {
                     />
                   </div>
                 )}
+                <Button
+                  type="button"
+                  onClick={handleOtp}
+                  variant="orange"
+                  disabled={isOTPButtonDisabled || loading}
+                  className="cursor-pointer w-full "
+                >
+                  {loading ? (
+                    <Loader2 className="sieze-4 text-zinc-50 animate-spin" />
+                  ) : (
+                    "Continue >"
+                  )}
+                </Button>
+              </div>
+
               <Button
                 onClick={() => setSuccess(false)}
                 variant="ghost"
@@ -383,6 +419,6 @@ export default function RegisterPage() {
           </CardContent>
         </Card>
       )}
-    </>
+    </motion.div>
   );
 }
