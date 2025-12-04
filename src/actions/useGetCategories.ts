@@ -35,15 +35,13 @@ export const getRoutes = () => {
   const pathname = usePathname();
   const {data, error, loading} = useGetCategories();
 
-  let routes = data?.map((category:Category) => {
+  let routes = data?.filter((item) => item.status === true ).map((category:Category) => {
     const IconComponent = ICONS[category.icon];
     return {
-      href: category.slug
-        ? category.slug.toLowerCase()
-        : category.name.toLowerCase(),
+      href: category.slug,
       name: category.name,
       isActive:
-        pathname === `/${category.slug ? category.slug : category.name}`,
+        pathname.startsWith(`/${category.slug}`),
       Icon: IconComponent,
     };
   });

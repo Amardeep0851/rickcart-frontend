@@ -1,5 +1,4 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { getCurrentUser } from "./lib/get-current-user";
 
 const protectedRoute = ["/checkut","/orders", "/wishlist"]
 const authRoutes = ["/sign-in", "/sign-up"]

@@ -59,6 +59,7 @@ export type ProductsType = {
   dimensions: Record<string, unknown>; 
   storeId: string;
   categoryId: string;
+  createdAt:Date;
 }
 
 export type CategoryBIllboardProducts = Category & {
@@ -67,6 +68,11 @@ export type CategoryBIllboardProducts = Category & {
 
 export type ProductWithImages = ProductsType & {
   images:ProductImageType;
+  category:Category;
+}
+
+export type ProductWithImagesArray = ProductsType & {
+  images:ProductImageType[];
   category:Category;
 }
 export type BillboardType = {

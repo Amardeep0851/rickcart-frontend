@@ -72,7 +72,7 @@ export default function RegisterPage() {
     setError(null);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/register`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL_WITHOUT_STORE}/auth/register`,
         values
       );
       if (response?.status === 200) {
@@ -108,7 +108,7 @@ export default function RegisterPage() {
   const handleOtp = async () => {
     setLoading(true);
     try {
-      const response = await axios.post( `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/otp`,{ value, email }, {withCredentials:true});
+      const response = await axios.post( `${process.env.NEXT_PUBLIC_BACKEND_URL_WITHOUT_STORE}/auth/otp`,{ value, email }, {withCredentials:true});
 
       if (response?.status === 200) {
         form.reset();

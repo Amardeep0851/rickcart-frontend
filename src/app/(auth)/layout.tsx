@@ -1,10 +1,16 @@
 import React, { Suspense } from "react";
+import { redirect } from "next/navigation";
 
 import Logo from "@/components/header/logo";
 import ShoppingImage from "@/components/auth/shopping-image";
 import BgGradiant from "@/components/auth/bg-gradiant";
+import { getCurrentUserServer } from "@/lib/get-current-user-server";
 
-function AuthLayout({ children }: { children: React.ReactNode }) {
+async function AuthLayout({ children }: { children: React.ReactNode }) {
+  const user = await getCurrentUserServer();
+  if(user){
+    redirect("/")
+  }
   return (
     
     <div className="dark bg-zinc-950">

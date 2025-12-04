@@ -1,30 +1,74 @@
+"use client";
 import React from "react";
+import Image from "next/image";
 import { Minus, Plus, Trash } from "lucide-react";
 
-import { Card} from "@/components/ui/card";
+import { useCartStore } from "@/hooks/use-cart";
+import { useGetCartProducts } from "@/actions/hooks/useCartProduct";
+
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LoadingCircle } from "@/components/ui/loading";
 import ProductsHeader from "@/components/product/products-header";
 
 export default function OrderPages() {
+  const { cart, changeQuantity, addItem, removeItem } = useCartStore();
+  const { data, loading } = useGetCartProducts();
+  // if (loading) {
+  //   return (
+  //     <div className="dark:bg-zinc-800 bg-zinc-100 text-zinc-100 rounded-md mt-4 p-4 min-h-screen">
+  //       <LoadingCircle />
+  //     </div>
+  //   );
+  // }
+
   return (
     <div className="dark:bg-zinc-800 bg-zinc-100 text-zinc-100 rounded-md mt-4 p-4 min-h-screen">
       {/* Cart Page */}
 
-      <ProductsHeader title={`Your Cart (${2})`} />
+      <ProductsHeader title={`Your Cart (${cart.length})`} />
       <section className="lg:grid lg:grid-cols-7 gap-x-6">
         <div className="space-y-4 col-span-3 lg:col-span-5  ">
-          {[1, 2].map((item) => (
+          {data?.map((item, index) => (
             <Card
-              key={item}
+              key={index}
               className="dark:bg-zinc-800 bg-zinc-100 shadow-none p-4 rounded-md flex justify-between dark:hover:bg-zinc-800/70 duration-100 "
             >
-              <div className="flex items-center gap-4 ">
-                <div className="w-20 h-20 bg-zinc-700 rounded-md"></div>
+              <div className="flex items-start gap-4 ">
+                <div className="aspect-square h-28 rounded-sm relative mt-2 bg-zinc-200  ">
+                  <Image
+                    src={item.images[0].url}
+                    fill
+                    alt={item.name}
+                    className="rounded-sm p-3"
+                  />
+                </div>
                 <div>
-                  <h3 className="text-lg font-semibold">Product Name</h3>
-                  <p className="text-sm text-zinc-400">Category</p>
-                  <p className="text-orange-700 font-semibold mt-1">₹7,000</p>
+                  <h3 className="text-lg font-semibold">{item.name}</h3>
+                  <p className="text-sm text-zinc-400">{item.category.name}</p>
+                  <div className="text-orange-700 font-semibold mt-1">
+                    <div className="flex items-baseline gap-2 pt-1">
+                      <span className="text-base font-bold dark:text-white text-zinc-800">
+                        ${item.comparePrice}
+                      </span>
+                      {item.price && (
+                        <span className="text-sm text-gray-500 line-through">
+                          ${item.price}
+                        </span>
+                      )}
+                      {/* Calculate Discount % */}
+                      <span className="text-xs dark:text-green-500 text-green-500 font-medium">
+                        {Math.round(
+                          item?.comparePrice
+                            ? ((item.price - item?.comparePrice) / item.price) *
+                                100
+                            : 0
+                        )}
+                        % OFF
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center justify-between gap-4">
@@ -33,26 +77,36 @@ export default function OrderPages() {
                     className="cursor-pointer bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-700 dark:text-zinc-100"
                     variant="outline"
                     size="sm"
+                    onClick={() => changeQuantity(item.id, -1)}
                   >
                     <Minus className="size-3" />
                   </Button>
-                  <Input
-                    type="text"
-                    className="w-8 h-8 dark:bg-zinc-700 bg-zinc-100 text-center"
-                    readOnly
-                  />
+                  {
+                    cart.map((cartItem) => {
+                      if(cartItem.id === item.id){
+                        return (<Input
+                          type="text"
+                          className="w-8 h-8 dark:bg-zinc-700 bg-zinc-100 text-center"
+                          value={ cartItem.quantity }
+                          readOnly
+                        />)
+                      }
+                    })
+                  }
                   <Button
                     className="cursor-pointer bg-zinc-50 hover:bg-zinc-100 dark:bg-zinc-700 dark:text-zinc-200"
                     size="sm"
                     variant="outline"
+                    onClick={() => changeQuantity(item.id, +1)}
                   >
                     <Plus className="size-3" />
                   </Button>
                 </div>
                 <Button
                   className="cursor-pointer  "
-                  variant="destructive"
+                  variant="orange"
                   size="sm"
+                  onClick={() => removeItem(item.id)}
                 >
                   <Trash className="size-3" />
                 </Button>

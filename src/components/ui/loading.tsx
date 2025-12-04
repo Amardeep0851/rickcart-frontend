@@ -9,3 +9,11 @@ return (
   </div>
 )
 }
+
+export const LoadingCircleWithoutPosition = ({className}:{className?:string}) => {
+return (
+  <div className="">
+    <Loader2 className={cn("animate-spin text-orange-700 size-8 ", className)}/>
+  </div>
+)
+}

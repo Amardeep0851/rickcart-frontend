@@ -59,7 +59,7 @@ function Columns() {
           {routes?.slice(0, 5).map((category) => (
             <li className="" key={category.href}>
               <Link
-                href={category.href}
+                href={`/${category.href}`}
                   className={cn("hover:text-orange-700  transition-all duration-200 hover:pl-1", category.isActive && "text-orange-700")}
               >
                 {category.name}

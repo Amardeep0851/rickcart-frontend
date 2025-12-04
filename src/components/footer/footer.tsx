@@ -13,8 +13,8 @@ function Footer() {
   
 
   return (
-    <div className=" bg-transparent relative mt-2 mx-4">
-      <div className="bg-gradient-to-b dark:from-zinc-900/95 dark:to-zinc-950 from-zinc-50 to-zinc-200/95 rounded-t-md z-50 px-8 py-12 pt-1 max-w-7xl mx-auto">
+    <div className=" bg-transparent relative mt-2">
+      <div className="bg-gradient-to-b dark:from-zinc-950/85 dark:to-zinc-900 from-zinc-50 to-zinc-200/95 rounded-t-md z-50 px-8 py-12 pt-1 max-w-7xl mx-auto">
 
         <ContactUsButton  />
         <Columns  />
